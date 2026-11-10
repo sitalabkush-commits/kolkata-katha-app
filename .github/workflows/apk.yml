@@ -1,0 +1,29 @@
+name: Build APK
+on: workflow_dispatch
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Create app
+        run: |
+          mkdir app && cd app
+          npm init -y
+          npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
+          mkdir www && echo "<html></html>" > www/index.html
+          cat > capacitor.config.json <<'EOF'
+          {"appId":"com.sitalabkush.kolkata-katha","appName":"Kolkata Katha","webDir":"www","server":{"url":"https://sitalabkush-commits.github.io/kolkata-katha/"}}
+          EOF
+          npx cap add android
+          npx cap sync android
+          cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kolkata-katha-apk
+          path: app/android/app/build/outputs/apk/debug/*.apk
