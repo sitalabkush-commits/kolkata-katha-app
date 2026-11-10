@@ -18,7 +18,7 @@ jobs:
           npm i @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6
           mkdir www && echo "<html></html>" > www/index.html
           cat > capacitor.config.json <<'EOF'
-          {"appId":"com.sitalabkush.kolkata-katha","appName":"Kolkata Katha","webDir":"www","server":{"url":"https://sitalabkush-commits.github.io/kolkata-katha/"}}
+          {"appId":"com.sitalabkush.kolkatakatha","appName":"Kolkata Katha","webDir":"www","server":{"url":"https://sitalabkush-commits.github.io/kolkata-katha/"}}
           EOF
           npx cap add android
           npx cap sync android
